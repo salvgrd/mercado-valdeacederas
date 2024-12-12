@@ -1,18 +1,22 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
 import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
     const shops = [
         {
             id: 1,
-            name: "La Jamonería",
+            name: "La Jamónería",
             specialty: "Cured Meats",
             description:
                 "Specializing in the finest Iberian and Serrano hams, as well as other cured meats from across Spain.",
             image: "/placeholder.svg?height=400&width=600",
+            gallery: [
+                "/placeholder.svg?height=300&width=300&text=Jamón+Ibérico",
+                "/placeholder.svg?height=300&width=300&text=Chorizo",
+                "/placeholder.svg?height=300&width=300&text=Lomo",
+                "/placeholder.svg?height=300&width=300&text=Salchichón",
+            ],
         },
         {
             id: 2,
@@ -21,6 +25,12 @@ export async function getStaticPaths() {
             description:
                 "Offering a wide variety of Spanish cheeses, with a focus on the famous Manchego cheese from La Mancha region.",
             image: "/placeholder.svg?height=400&width=600",
+            gallery: [
+                "/placeholder.svg?height=300&width=300&text=Manchego",
+                "/placeholder.svg?height=300&width=300&text=Cabrales",
+                "/placeholder.svg?height=300&width=300&text=Idiazábal",
+                "/placeholder.svg?height=300&width=300&text=Mahón",
+            ],
         },
         {
             id: 3,
@@ -29,6 +39,12 @@ export async function getStaticPaths() {
             description:
                 "Providing high-quality extra virgin olive oils from various regions of Spain, including some of the world's best varieties.",
             image: "/placeholder.svg?height=400&width=600",
+            gallery: [
+                "/placeholder.svg?height=300&width=300&text=Picual",
+                "/placeholder.svg?height=300&width=300&text=Arbequina",
+                "/placeholder.svg?height=300&width=300&text=Hojiblanca",
+                "/placeholder.svg?height=300&width=300&text=Cornicabra",
+            ],
         },
         {
             id: 4,
@@ -37,6 +53,12 @@ export async function getStaticPaths() {
             description:
                 "Your one-stop shop for all paella ingredients, including various types of rice, spices, and traditional paella pans.",
             image: "/placeholder.svg?height=400&width=600",
+            gallery: [
+                "/placeholder.svg?height=300&width=300&text=Bomba+Rice",
+                "/placeholder.svg?height=300&width=300&text=Paella+Pan",
+                "/placeholder.svg?height=300&width=300&text=Saffron",
+                "/placeholder.svg?height=300&width=300&text=Smoked+Paprika",
+            ],
         },
     ];
 
@@ -52,39 +74,53 @@ const { shop } = Astro.props;
 ---
 
 <Layout title={`${shop.name} | Mercado Madrid`}>
-    <div class="min-h-screen bg-[#f5f3ef] text-[#2a2a2a]">
-        <Header />
-        <main class="py-20">
-            <div class="container mx-auto px-4">
-                <h1 class="mb-8 text-5xl font-bold">{shop.name}</h1>
-                <div class="flex flex-col gap-8 lg:flex-row">
-                    <div class="lg:w-1/2">
+    <div class="py-20 container mx-auto px-4">
+        <h1 class="mb-8 text-5xl font-bold">{shop.name}</h1>
+        <div class="flex flex-col gap-8 lg:flex-row">
+            <div class="lg:w-1/2">
+                <Image
+                    width={600}
+                    height={400}
+                    loading="eager"
+                    src={shop.image}
+                    alt={shop.name}
+                    class="w-full rounded-none border-4 border-[#2a2a2a] object-cover"
+                />
+            </div>
+            <div class="lg:w-1/2">
+                <h2 class="mb-4 text-3xl font-semibold">
+                    Specialty: <span class="text-[#e63946]"
+                        >{shop.specialty}</span
+                    >
+                </h2>
+                <p class="mb-6 text-lg">{shop.description}</p>
+                <a
+                    href="/#shops"
+                    class="inline-block rounded-none border-4 border-[#2a2a2a] bg-[#2a2a2a] px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-transparent hover:text-[#2a2a2a]"
+                >
+                    Back to Shops
+                </a>
+            </div>
+        </div>
+
+        <h2 class="mb-6 mt-16 text-4xl font-bold">Product Gallery</h2>
+        <div
+            class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        >
+            {
+                shop.gallery.map((image, index) => (
+                    <div class="aspect-square overflow-hidden rounded-none border-4 border-[#2a2a2a]">
                         <Image
-                            loading="lazy"
-                            src={shop.image}
-                            alt={shop.name}
-                            width={600}
-                            height={400}
-                            class="w-full rounded-none border-4 border-[#2a2a2a] object-cover"
+                            loading="eager"
+                            width={300}
+                            height={300}
+                            src={image}
+                            alt={`${shop.name} product ${index + 1}`}
+                            class="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
                         />
                     </div>
-                    <div class="lg:w-1/2">
-                        <h2 class="mb-4 text-3xl font-semibold">
-                            Specialty: <span class="text-[#e63946]"
-                                >{shop.specialty}</span
-                            >
-                        </h2>
-                        <p class="mb-6 text-lg">{shop.description}</p>
-                        <a
-                            href="/#shops"
-                            class="inline-block rounded-none border-4 border-[#2a2a2a] bg-[#2a2a2a] px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-transparent hover:text-[#2a2a2a]"
-                        >
-                            Back to Shops
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <Footer />
+                ))
+            }
+        </div>
     </div>
 </Layout>
