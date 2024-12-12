@@ -1,0 +1,57 @@
+---
+const shops = [
+    {
+        id: 1,
+        name: "La Jamonería",
+        specialty: "Charcuteria",
+        image: "/placeholder.svg?height=200&width=200",
+    },
+    {
+        id: 2,
+        name: "Quesería Manchega",
+        specialty: "Quesos y lacteos",
+        image: "/placeholder.svg?height=200&width=200",
+    },
+    {
+        id: 3,
+        name: "Aceites del Sur",
+        specialty: "ADOVE",
+        image: "/placeholder.svg?height=200&width=200",
+    },
+    {
+        id: 4,
+        name: "Paella Paradise",
+        specialty: "Arroces",
+        image: "/placeholder.svg?height=200&width=200",
+    },
+];
+---
+
+<section id="shops" class="py-20">
+    <div class="container mx-auto px-4">
+        <h2 class="mb-12 text-4xl font-bold">NUESTROS PUESTOS</h2>
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {
+                shops.map((shop) => (
+                    <a href={`/shops/${shop.id}`} class="group">
+                        <div class="overflow-hidden rounded-none border-4 border-[#2a2a2a] transition-transform duration-300 group-hover:scale-105">
+                            <img
+                                src={shop.image}
+                                alt={shop.name}
+                                class="h-48 w-full object-cover"
+                            />
+                            <div class="p-4">
+                                <h3 class="mb-2 text-xl font-bold">
+                                    {shop.name}
+                                </h3>
+                                <p class="text-lg font-semibold text-[#e63946]">
+                                    {shop.specialty}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>

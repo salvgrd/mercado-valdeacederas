@@ -1,0 +1,90 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+    const shops = [
+        {
+            id: 1,
+            name: "La Jamonería",
+            specialty: "Cured Meats",
+            description:
+                "Specializing in the finest Iberian and Serrano hams, as well as other cured meats from across Spain.",
+            image: "/placeholder.svg?height=400&width=600",
+        },
+        {
+            id: 2,
+            name: "Quesería Manchega",
+            specialty: "Artisanal Cheeses",
+            description:
+                "Offering a wide variety of Spanish cheeses, with a focus on the famous Manchego cheese from La Mancha region.",
+            image: "/placeholder.svg?height=400&width=600",
+        },
+        {
+            id: 3,
+            name: "Aceites del Sur",
+            specialty: "Olive Oils",
+            description:
+                "Providing high-quality extra virgin olive oils from various regions of Spain, including some of the world's best varieties.",
+            image: "/placeholder.svg?height=400&width=600",
+        },
+        {
+            id: 4,
+            name: "Paella Paradise",
+            specialty: "Rice Dishes",
+            description:
+                "Your one-stop shop for all paella ingredients, including various types of rice, spices, and traditional paella pans.",
+            image: "/placeholder.svg?height=400&width=600",
+        },
+    ];
+
+    return shops.map((shop) => {
+        return {
+            params: { id: shop.id.toString() },
+            props: { shop },
+        };
+    });
+}
+
+const { shop } = Astro.props;
+---
+
+<Layout title={`${shop.name} | Mercado Madrid`}>
+    <div class="min-h-screen bg-[#f5f3ef] text-[#2a2a2a]">
+        <Header />
+        <main class="py-20">
+            <div class="container mx-auto px-4">
+                <h1 class="mb-8 text-5xl font-bold">{shop.name}</h1>
+                <div class="flex flex-col gap-8 lg:flex-row">
+                    <div class="lg:w-1/2">
+                        <Image
+                            loading="lazy"
+                            src={shop.image}
+                            alt={shop.name}
+                            width={600}
+                            height={400}
+                            class="w-full rounded-none border-4 border-[#2a2a2a] object-cover"
+                        />
+                    </div>
+                    <div class="lg:w-1/2">
+                        <h2 class="mb-4 text-3xl font-semibold">
+                            Specialty: <span class="text-[#e63946]"
+                                >{shop.specialty}</span
+                            >
+                        </h2>
+                        <p class="mb-6 text-lg">{shop.description}</p>
+                        <a
+                            href="/#shops"
+                            class="inline-block rounded-none border-4 border-[#2a2a2a] bg-[#2a2a2a] px-8 py-3 text-lg font-bold text-white transition-colors hover:bg-transparent hover:text-[#2a2a2a]"
+                        >
+                            Back to Shops
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <Footer />
+    </div>
+</Layout>
